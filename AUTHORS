@@ -1,0 +1,26 @@
+# Authors
+
+This file lists the contributors to the ArithmeticKit project.
+
+## Core Team
+
+- **H1S97X** - Original author and maintainer
+  - Initial design and implementation
+  - Expression parser and evaluator
+  - Calculator implementations
+
+## Contributors
+
+We welcome contributions from the community! If you've contributed to this project,
+please add your name here in a pull request.
+
+## Special Thanks
+
+- The Dart team for creating an amazing language
+- The math_expressions library for design inspiration
+- The open-source community for inspiration and support
+- Everyone who uses and provides feedback on ArithmeticKit
+
+---
+
+Want to contribute? Check out our [Contributing Guidelines](CONTRIBUTING.md)!
