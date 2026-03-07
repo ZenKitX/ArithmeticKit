@@ -109,34 +109,36 @@ class BasicCalculator {
   static double _processAddSub(String expression) {
     double result = 0;
     int i = 0;
+    String currentOp = '+'; // Start with addition
 
     while (i < expression.length) {
       // Find next operator
       int nextOp = _findNextOperator(expression, i);
 
+      String numStr;
       if (nextOp == -1) {
         // No more operators, process last number
-        String numStr = expression.substring(i);
-        result += double.parse(numStr);
+        numStr = expression.substring(i);
+      } else {
+        // Extract number
+        numStr = expression.substring(i, nextOp);
+      }
+
+      double num = double.parse(numStr);
+
+      // Apply current operator
+      if (currentOp == '+') {
+        result += num;
+      } else if (currentOp == '-') {
+        result -= num;
+      }
+
+      if (nextOp == -1) {
         break;
       }
 
-      // Extract number
-      String numStr = expression.substring(i, nextOp);
-      double num = double.parse(numStr);
-
-      if (i == 0) {
-        result = num;
-      } else {
-        // Get previous operator
-        String prevOp = expression[i - 1];
-        if (prevOp == '+') {
-          result += num;
-        } else if (prevOp == '-') {
-          result -= num;
-        }
-      }
-
+      // Update current operator for next iteration
+      currentOp = expression[nextOp];
       i = nextOp + 1;
     }
 
@@ -148,7 +150,7 @@ class BasicCalculator {
     int start = from;
     while (start > 0) {
       String char = expression[start - 1];
-      if (char == '+' || char == '-' || char == '*' || char == '/') {
+      if (char == '+' || char == '-' || char == '*' || char == '/' || char == '%') {
         break;
       }
       start--;
@@ -161,7 +163,7 @@ class BasicCalculator {
     int end = from;
     while (end < expression.length) {
       String char = expression[end];
-      if (char == '+' || char == '-' || char == '*' || char == '/') {
+      if (char == '+' || char == '-' || char == '*' || char == '/' || char == '%') {
         break;
       }
       end++;
