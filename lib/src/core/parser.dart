@@ -1,6 +1,6 @@
 import 'expression.dart';
-import 'token.dart';
 import 'lexer.dart';
+import 'token.dart';
 
 /// Parser for mathematical expressions
 ///

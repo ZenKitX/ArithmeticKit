@@ -1,5 +1,5 @@
-import 'package:flutter_test/flutter_test.dart';
 import 'package:arithmetic_kit/arithmetic_kit.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('BasicCalculator', () {
@@ -17,15 +17,15 @@ void main() {
       });
 
       test('multiplication', () {
-        expect(BasicCalculator.calculate('2脳3'), '6');
+        expect(BasicCalculator.calculate('2×3'), '6');
         expect(BasicCalculator.calculate('2*3'), '6');
-        expect(BasicCalculator.calculate('0.5脳2'), '1');
+        expect(BasicCalculator.calculate('0.5×2'), '1');
       });
 
       test('division', () {
-        expect(BasicCalculator.calculate('6梅2'), '3');
+        expect(BasicCalculator.calculate('6÷2'), '3');
         expect(BasicCalculator.calculate('6/2'), '3');
-        expect(BasicCalculator.calculate('1梅2'), '0.5');
+        expect(BasicCalculator.calculate('1÷2'), '0.5');
       });
 
       test('modulo', () {
@@ -36,15 +36,15 @@ void main() {
 
     group('Order of Operations', () {
       test('multiplication before addition', () {
-        expect(BasicCalculator.calculate('2+3脳4'), '14');
+        expect(BasicCalculator.calculate('2+3×4'), '14');
       });
 
       test('division before subtraction', () {
-        expect(BasicCalculator.calculate('10-6梅2'), '7');
+        expect(BasicCalculator.calculate('10-6÷2'), '7');
       });
 
       test('complex expression', () {
-        expect(BasicCalculator.calculate('2+3脳4-6梅2'), '11');
+        expect(BasicCalculator.calculate('2+3×4-6÷2'), '11');
       });
     });
 
@@ -55,7 +55,7 @@ void main() {
       });
 
       test('division by zero', () {
-        expect(BasicCalculator.calculate('5梅0'), 'Error');
+        expect(BasicCalculator.calculate('5÷0'), 'Error');
       });
 
       test('modulo by zero', () {

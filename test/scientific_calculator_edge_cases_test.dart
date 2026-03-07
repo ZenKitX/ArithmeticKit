@@ -1,6 +1,7 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:arithmetic_kit/arithmetic_kit.dart';
 import 'dart:math' as math;
+
+import 'package:arithmetic_kit/arithmetic_kit.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('ScientificCalculator - Edge Cases', () {
@@ -10,13 +11,13 @@ void main() {
         final sin0 = double.parse(ScientificCalculator.calculate('sin0'));
         expect(sin0, closeTo(0, 0.0001));
 
-        // sin(蟺/2) 鈮?1
+        // sin(π/2) = 1
         final sinPiOver2 = double.parse(
           ScientificCalculator.calculate('sin${math.pi / 2}'),
         );
         expect(sinPiOver2, closeTo(1, 0.0001));
 
-        // sin(蟺) 鈮?0
+        // sin(π) = 0
         final sinPi = double.parse(
           ScientificCalculator.calculate('sin${math.pi}'),
         );
@@ -28,13 +29,13 @@ void main() {
         final cos0 = double.parse(ScientificCalculator.calculate('cos0'));
         expect(cos0, closeTo(1, 0.0001));
 
-        // cos(蟺/2) 鈮?0
+        // cos(π/2) = 0
         final cosPiOver2 = double.parse(
           ScientificCalculator.calculate('cos${math.pi / 2}'),
         );
         expect(cosPiOver2, closeTo(0, 0.0001));
 
-        // cos(蟺) 鈮?-1
+        // cos(π) = -1
         final cosPi = double.parse(
           ScientificCalculator.calculate('cos${math.pi}'),
         );
@@ -46,7 +47,7 @@ void main() {
         final tan0 = double.parse(ScientificCalculator.calculate('tan0'));
         expect(tan0, closeTo(0, 0.0001));
 
-        // tan(蟺/4) 鈮?1
+        // tan(π/4) = 1
         final tanPiOver4 = double.parse(
           ScientificCalculator.calculate('tan${math.pi / 4}'),
         );
@@ -60,11 +61,11 @@ void main() {
         final asin0 = double.parse(ScientificCalculator.calculate('asin0'));
         expect(asin0, closeTo(0, 0.0001));
 
-        // asin(1) = 蟺/2
+        // asin(1) = π/2
         final asin1 = double.parse(ScientificCalculator.calculate('asin1'));
         expect(asin1, closeTo(math.pi / 2, 0.0001));
 
-        // asin(-1) = -蟺/2
+        // asin(-1) = -π/2
         final asinNeg1 = double.parse(ScientificCalculator.calculate('asin-1'));
         expect(asinNeg1, closeTo(-math.pi / 2, 0.0001));
       });
@@ -80,7 +81,7 @@ void main() {
         final acos1 = double.parse(ScientificCalculator.calculate('acos1'));
         expect(acos1, closeTo(0, 0.0001));
 
-        // acos(0) = 蟺/2
+        // acos(0) = π/2
         final acos0 = double.parse(ScientificCalculator.calculate('acos0'));
         expect(acos0, closeTo(math.pi / 2, 0.0001));
       });
@@ -90,7 +91,7 @@ void main() {
         final atan0 = double.parse(ScientificCalculator.calculate('atan0'));
         expect(atan0, closeTo(0, 0.0001));
 
-        // atan(1) = 蟺/4
+        // atan(1) = π/4
         final atan1 = double.parse(ScientificCalculator.calculate('atan1'));
         expect(atan1, closeTo(math.pi / 4, 0.0001));
       });
@@ -105,7 +106,7 @@ void main() {
       });
 
       test('log invalid values', () {
-        // log(0) = -鈭?-> Error
+        // log(0) = NaN -> Error
         expect(ScientificCalculator.calculate('log0'), 'Error');
         // log(-1) = NaN -> Error
         expect(ScientificCalculator.calculate('log-1'), 'Error');
@@ -152,10 +153,7 @@ void main() {
       });
 
       test('zero base', () {
-        expect(
-          ScientificCalculator.calculate('0^0'),
-          '1',
-        ); // 鏁板涓婃湁浜夎锛屼絾閫氬父瀹氫箟涓?
+        expect(ScientificCalculator.calculate('0^0'), '1');
         expect(ScientificCalculator.calculate('0^1'), '0');
         expect(ScientificCalculator.calculate('0^2'), '0');
       });
@@ -206,10 +204,10 @@ void main() {
 
     group('Constants', () {
       test('pi constant', () {
-        final pi = double.parse(ScientificCalculator.calculate('蟺'));
+        final pi = double.parse(ScientificCalculator.calculate('π'));
         expect(pi, closeTo(math.pi, 0.0001));
 
-        final piTimes2 = double.parse(ScientificCalculator.calculate('蟺脳2'));
+        final piTimes2 = double.parse(ScientificCalculator.calculate('π2'));
         expect(piTimes2, closeTo(math.pi * 2, 0.0001));
       });
 
@@ -217,7 +215,7 @@ void main() {
         final e = double.parse(ScientificCalculator.calculate('e'));
         expect(e, closeTo(math.e, 0.0001));
 
-        final eTimes2 = double.parse(ScientificCalculator.calculate('e脳2'));
+        final eTimes2 = double.parse(ScientificCalculator.calculate('e2'));
         expect(eTimes2, closeTo(math.e * 2, 0.0001));
       });
     });
@@ -226,17 +224,17 @@ void main() {
       test('simple parentheses', () {
         expect(ScientificCalculator.calculate('(2+3)'), '5');
         expect(ScientificCalculator.calculate('(10-5)'), '5');
-        expect(ScientificCalculator.calculate('2脳(3+4)'), '14');
+        expect(ScientificCalculator.calculate('2(3+4)'), '14');
       });
 
       test('nested parentheses', () {
-        expect(ScientificCalculator.calculate('((2+3)脳4)'), '20');
-        expect(ScientificCalculator.calculate('2脳((3+4)脳5)'), '70');
+        expect(ScientificCalculator.calculate('((2+3)4)'), '20');
+        expect(ScientificCalculator.calculate('2((3+4)5)'), '70');
       });
 
       test('multiple parentheses', () {
-        expect(ScientificCalculator.calculate('(2+3)脳(4+5)'), '45');
-        expect(ScientificCalculator.calculate('(10-5)+(3脳2)'), '11');
+        expect(ScientificCalculator.calculate('(2+3)(4+5)'), '45');
+        expect(ScientificCalculator.calculate('(10-5)+(32)'), '11');
       });
     });
 
@@ -248,13 +246,13 @@ void main() {
         );
         expect(result1, closeTo(1, 0.0001));
 
-        // log(10) 脳 2 = 1 脳 2 = 2
-        expect(ScientificCalculator.calculate('log10脳2'), '2');
+        // log(10)  2 = 1  2 = 2
+        expect(ScientificCalculator.calculate('log102'), '2');
       });
 
       test('functions with constants', () {
-        // sin(蟺) 鈮?0
-        final sinPi = double.parse(ScientificCalculator.calculate('sin蟺'));
+        // sin(π) = 0
+        final sinPi = double.parse(ScientificCalculator.calculate('sinπ'));
         expect(sinPi, closeTo(0, 0.0001));
 
         // ln(e) = 1

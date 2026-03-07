@@ -1,16 +1,17 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:arithmetic_kit/arithmetic_kit.dart';
 import 'dart:math' as math;
+
+import 'package:arithmetic_kit/arithmetic_kit.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('ScientificCalculator', () {
     group('Basic Operations', () {
       test('addition and multiplication', () {
-        expect(ScientificCalculator.calculate('2+3脳4'), '14');
+        expect(ScientificCalculator.calculate('2+3×4'), '14');
       });
 
       test('parentheses', () {
-        expect(ScientificCalculator.calculate('(2+3)脳4'), '20');
+        expect(ScientificCalculator.calculate('(2+3)×4'), '20');
       });
     });
 
@@ -65,7 +66,7 @@ void main() {
 
     group('Constants', () {
       test('pi', () {
-        final result = double.parse(ScientificCalculator.calculate('蟺'));
+        final result = double.parse(ScientificCalculator.calculate('π'));
         expect(result, closeTo(math.pi, 0.0001));
       });
 

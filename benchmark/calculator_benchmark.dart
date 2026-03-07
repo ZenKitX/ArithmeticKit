@@ -2,7 +2,6 @@
 ///
 /// Run with: dart run benchmark/calculator_benchmark.dart
 import '../lib/arithmetic_kit.dart';
-import 'dart:io';
 
 void main() {
   print('=== ArithmeticKit Performance Benchmark ===\n');

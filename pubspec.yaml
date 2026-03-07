@@ -5,9 +5,6 @@ homepage: https://github.com/ZenKitX/ArithmeticKit
 repository: https://github.com/ZenKitX/ArithmeticKit
 issue_tracker: https://github.com/ZenKitX/ArithmeticKit/issues
 
-# Author information
-author: H1S97X
-
 # Acknowledgments:
 # Expression system design inspired by math_expressions library
 # https://pub.dev/packages/math_expressions
