@@ -150,7 +150,11 @@ class BasicCalculator {
     int start = from;
     while (start > 0) {
       String char = expression[start - 1];
-      if (char == '+' || char == '-' || char == '*' || char == '/' || char == '%') {
+      if (char == '+' ||
+          char == '-' ||
+          char == '*' ||
+          char == '/' ||
+          char == '%') {
         break;
       }
       start--;
@@ -163,7 +167,11 @@ class BasicCalculator {
     int end = from;
     while (end < expression.length) {
       String char = expression[end];
-      if (char == '+' || char == '-' || char == '*' || char == '/' || char == '%') {
+      if (char == '+' ||
+          char == '-' ||
+          char == '*' ||
+          char == '/' ||
+          char == '%') {
         break;
       }
       end++;

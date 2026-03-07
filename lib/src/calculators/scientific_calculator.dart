@@ -49,6 +49,9 @@ class ScientificCalculator {
 
   /// Evaluate expression
   static double _evaluateExpression(String expression) {
+    // Add implicit multiplication
+    expression = _addImplicitMultiplication(expression);
+
     // Process scientific functions
     expression = _processScientificFunctions(expression);
 
@@ -59,6 +62,49 @@ class ScientificCalculator {
     return _evaluateBasic(expression);
   }
 
+  /// Add implicit multiplication where needed
+  static String _addImplicitMultiplication(String expression) {
+    StringBuffer result = StringBuffer();
+
+    for (int i = 0; i < expression.length; i++) {
+      result.write(expression[i]);
+
+      if (i < expression.length - 1) {
+        String current = expression[i];
+        String next = expression[i + 1];
+
+        // Add * between:
+        // - number and (
+        // - ) and number
+        // - ) and (
+        // - constant and number
+        bool needsMultiplication = false;
+
+        if (current == ')' && (next == '(' || _isDigit(next))) {
+          needsMultiplication = true;
+        } else if (_isDigit(current) && next == '(') {
+          needsMultiplication = true;
+        } else if ((current == 'π' || current == 'e') &&
+            (_isDigit(next) || next == '(')) {
+          needsMultiplication = true;
+        } else if (current == ')' && (next == 'π' || next == 'e')) {
+          needsMultiplication = true;
+        }
+
+        if (needsMultiplication) {
+          result.write('*');
+        }
+      }
+    }
+
+    return result.toString();
+  }
+
+  /// Check if character is a digit
+  static bool _isDigit(String char) {
+    return char.codeUnitAt(0) >= 48 && char.codeUnitAt(0) <= 57;
+  }
+
   /// Process scientific functions
   static String _processScientificFunctions(String expression) {
     // Process 10^ and e^ first to avoid premature replacement of e
@@ -67,9 +113,11 @@ class ScientificCalculator {
       int index = expression.indexOf('10^');
       int numStart = index + 3;
       String numStr = _extractNumber(expression, numStart);
+      if (numStr.isEmpty) break;
       double num = double.parse(numStr);
       double result = math.pow(10, num).toDouble();
-      expression = expression.replaceFirst('10^$numStr', result.toString());
+      String resultStr = result.toString();
+      expression = expression.replaceFirst('10^$numStr', resultStr);
     }
 
     // Process e^ (power of e) - must be before replacing standalone e
@@ -77,14 +125,42 @@ class ScientificCalculator {
       int index = expression.indexOf('e^');
       int numStart = index + 2;
       String numStr = _extractNumber(expression, numStart);
+      if (numStr.isEmpty) break;
       double num = double.parse(numStr);
       double result = math.exp(num);
       expression = expression.replaceFirst('e^$numStr', result.toString());
     }
 
     // Now safe to replace π and e constants
+    // But be careful not to replace 'e' in scientific notation (e.g., 1e-10)
     expression = expression.replaceAll('π', math.pi.toString());
-    expression = expression.replaceAll('e', math.e.toString());
+
+    // Replace 'e' only when it's not part of scientific notation
+    StringBuffer result = StringBuffer();
+    for (int i = 0; i < expression.length; i++) {
+      if (expression[i] == 'e') {
+        // Check if this is scientific notation
+        bool isScientificNotation = false;
+        if (i > 0 && i < expression.length - 1) {
+          String prev = expression[i - 1];
+          String next = expression[i + 1];
+          // If previous is digit and next is +/- or digit, it's scientific notation
+          if (_isDigit(prev) &&
+              (next == '+' || next == '-' || _isDigit(next))) {
+            isScientificNotation = true;
+          }
+        }
+
+        if (!isScientificNotation) {
+          result.write(math.e.toString());
+        } else {
+          result.write('e');
+        }
+      } else {
+        result.write(expression[i]);
+      }
+    }
+    expression = result.toString();
 
     // Process asin (arcsine)
     while (expression.contains('asin')) {
@@ -191,11 +267,29 @@ class ScientificCalculator {
   /// Extract number from position
   static String _extractNumber(String expression, int start) {
     StringBuffer num = StringBuffer();
+
+    // Handle negative sign at the start
+    if (start < expression.length && expression[start] == '-') {
+      num.write('-');
+      start++;
+    }
+
+    bool hasE = false;
     for (int i = start; i < expression.length; i++) {
       String char = expression[i];
       if (char == '.' ||
           (char.codeUnitAt(0) >= 48 && char.codeUnitAt(0) <= 57)) {
         num.write(char);
+      } else if (char == 'e' && !hasE && i > start) {
+        // This might be scientific notation
+        num.write(char);
+        hasE = true;
+        // Check if next char is +/- and include it
+        if (i + 1 < expression.length &&
+            (expression[i + 1] == '+' || expression[i + 1] == '-')) {
+          num.write(expression[i + 1]);
+          i++; // Skip the +/- in next iteration
+        }
       } else {
         break;
       }
@@ -232,11 +326,37 @@ class ScientificCalculator {
   /// Extract number backward from position
   static String _extractNumberBackward(String expression, int end) {
     StringBuffer num = StringBuffer();
+    bool hasNegative = false;
+    bool hasE = false;
+
     for (int i = end; i >= 0; i--) {
       String char = expression[i];
       if (char == '.' ||
           (char.codeUnitAt(0) >= 48 && char.codeUnitAt(0) <= 57)) {
         num.write(char);
+      } else if (char == 'e' && !hasE) {
+        // This might be scientific notation
+        num.write(char);
+        hasE = true;
+      } else if ((char == '+' || char == '-') &&
+          hasE &&
+          i > 0 &&
+          expression[i - 1] == 'e') {
+        // This is the sign in scientific notation (e.g., e-10)
+        num.write(char);
+      } else if (char == '-' && i > 0 && !hasNegative) {
+        // Check if this is a negative sign (not subtraction operator)
+        String prevChar = expression[i - 1];
+        if (prevChar == '(' ||
+            prevChar == '^' ||
+            prevChar == '*' ||
+            prevChar == '/' ||
+            prevChar == '+' ||
+            prevChar == '-') {
+          num.write(char);
+          hasNegative = true;
+        }
+        break;
       } else {
         break;
       }
@@ -314,7 +434,16 @@ class ScientificCalculator {
     for (int i = 0; i < expression.length; i++) {
       String char = expression[i];
       if (char == '+' || char == '-') {
-        if (currentNum.isNotEmpty) {
+        // Check if this is part of scientific notation (e.g., 1e-10)
+        bool isScientificNotation = false;
+        if (i > 0 && expression[i - 1] == 'e') {
+          isScientificNotation = true;
+        }
+
+        if (isScientificNotation) {
+          // This is part of scientific notation, not an operator
+          currentNum.write(char);
+        } else if (currentNum.isNotEmpty) {
           parts.add(currentNum.toString());
           operators.add(char);
           currentNum.clear();

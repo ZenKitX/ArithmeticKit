@@ -1,4 +1,4 @@
-import 'dart:math' as math;
+﻿import 'dart:math' as math;
 
 import 'package:arithmetic_kit/arithmetic_kit.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -234,7 +234,7 @@ void main() {
 
       test('multiple parentheses', () {
         expect(ScientificCalculator.calculate('(2+3)(4+5)'), '45');
-        expect(ScientificCalculator.calculate('(10-5)+(32)'), '11');
+        expect(ScientificCalculator.calculate('(10-5)+(3×2)'), '11');
       });
     });
 
@@ -246,8 +246,8 @@ void main() {
         );
         expect(result1, closeTo(1, 0.0001));
 
-        // log(10)  2 = 1  2 = 2
-        expect(ScientificCalculator.calculate('log102'), '2');
+        // log(10) × 2 = 1 × 2 = 2
+        expect(ScientificCalculator.calculate('log10×2'), '2');
       });
 
       test('functions with constants', () {

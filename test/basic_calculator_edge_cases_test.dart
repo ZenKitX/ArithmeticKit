@@ -24,7 +24,7 @@ void main() {
       test('decimal division', () {
         expect(BasicCalculator.calculate('1÷2'), '0.5');
         expect(BasicCalculator.calculate('0.5÷0.5'), '1');
-        expect(BasicCalculator.calculate('1÷3'), closeTo(0.333333, 0.000001));
+        expect(BasicCalculator.calculate('1÷3'), '0.33333333');
       });
     });
 
@@ -35,7 +35,7 @@ void main() {
       });
 
       test('negative multiplication', () {
-        expect(BasicCalculator.calculate('-5×2'), 'Error'); // 当前实现不支持负数开头
+        expect(BasicCalculator.calculate('-5×2'), '-10'); // 现在支持负数
       });
     });
 
