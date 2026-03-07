@@ -9,16 +9,16 @@ void main() {
         // sin(0) = 0
         final sin0 = double.parse(ScientificCalculator.calculate('sin0'));
         expect(sin0, closeTo(0, 0.0001));
-        
+
         // sin(蟺/2) 鈮?1
         final sinPiOver2 = double.parse(
-          ScientificCalculator.calculate('sin${math.pi / 2}')
+          ScientificCalculator.calculate('sin${math.pi / 2}'),
         );
         expect(sinPiOver2, closeTo(1, 0.0001));
-        
+
         // sin(蟺) 鈮?0
         final sinPi = double.parse(
-          ScientificCalculator.calculate('sin${math.pi}')
+          ScientificCalculator.calculate('sin${math.pi}'),
         );
         expect(sinPi, closeTo(0, 0.0001));
       });
@@ -27,16 +27,16 @@ void main() {
         // cos(0) = 1
         final cos0 = double.parse(ScientificCalculator.calculate('cos0'));
         expect(cos0, closeTo(1, 0.0001));
-        
+
         // cos(蟺/2) 鈮?0
         final cosPiOver2 = double.parse(
-          ScientificCalculator.calculate('cos${math.pi / 2}')
+          ScientificCalculator.calculate('cos${math.pi / 2}'),
         );
         expect(cosPiOver2, closeTo(0, 0.0001));
-        
+
         // cos(蟺) 鈮?-1
         final cosPi = double.parse(
-          ScientificCalculator.calculate('cos${math.pi}')
+          ScientificCalculator.calculate('cos${math.pi}'),
         );
         expect(cosPi, closeTo(-1, 0.0001));
       });
@@ -45,10 +45,10 @@ void main() {
         // tan(0) = 0
         final tan0 = double.parse(ScientificCalculator.calculate('tan0'));
         expect(tan0, closeTo(0, 0.0001));
-        
+
         // tan(蟺/4) 鈮?1
         final tanPiOver4 = double.parse(
-          ScientificCalculator.calculate('tan${math.pi / 4}')
+          ScientificCalculator.calculate('tan${math.pi / 4}'),
         );
         expect(tanPiOver4, closeTo(1, 0.0001));
       });
@@ -59,11 +59,11 @@ void main() {
         // asin(0) = 0
         final asin0 = double.parse(ScientificCalculator.calculate('asin0'));
         expect(asin0, closeTo(0, 0.0001));
-        
+
         // asin(1) = 蟺/2
         final asin1 = double.parse(ScientificCalculator.calculate('asin1'));
         expect(asin1, closeTo(math.pi / 2, 0.0001));
-        
+
         // asin(-1) = -蟺/2
         final asinNeg1 = double.parse(ScientificCalculator.calculate('asin-1'));
         expect(asinNeg1, closeTo(-math.pi / 2, 0.0001));
@@ -79,7 +79,7 @@ void main() {
         // acos(1) = 0
         final acos1 = double.parse(ScientificCalculator.calculate('acos1'));
         expect(acos1, closeTo(0, 0.0001));
-        
+
         // acos(0) = 蟺/2
         final acos0 = double.parse(ScientificCalculator.calculate('acos0'));
         expect(acos0, closeTo(math.pi / 2, 0.0001));
@@ -89,7 +89,7 @@ void main() {
         // atan(0) = 0
         final atan0 = double.parse(ScientificCalculator.calculate('atan0'));
         expect(atan0, closeTo(0, 0.0001));
-        
+
         // atan(1) = 蟺/4
         final atan1 = double.parse(ScientificCalculator.calculate('atan1'));
         expect(atan1, closeTo(math.pi / 4, 0.0001));
@@ -113,10 +113,8 @@ void main() {
 
       test('ln special values', () {
         expect(ScientificCalculator.calculate('ln1'), '0');
-        
-        final lnE = double.parse(
-          ScientificCalculator.calculate('ln${math.e}')
-        );
+
+        final lnE = double.parse(ScientificCalculator.calculate('ln${math.e}'));
         expect(lnE, closeTo(1, 0.0001));
       });
 
@@ -138,7 +136,7 @@ void main() {
       test('negative powers', () {
         expect(ScientificCalculator.calculate('2^-1'), '0.5');
         expect(ScientificCalculator.calculate('10^-1'), '0.1');
-        
+
         final result = double.parse(ScientificCalculator.calculate('2^-2'));
         expect(result, closeTo(0.25, 0.0001));
       });
@@ -146,23 +144,28 @@ void main() {
       test('fractional powers', () {
         expect(ScientificCalculator.calculate('4^0.5'), '2');
         expect(ScientificCalculator.calculate('9^0.5'), '3');
-        
-        final result = double.parse(ScientificCalculator.calculate('8^0.333333'));
+
+        final result = double.parse(
+          ScientificCalculator.calculate('8^0.333333'),
+        );
         expect(result, closeTo(2, 0.01));
       });
 
       test('zero base', () {
-        expect(ScientificCalculator.calculate('0^0'), '1'); // 鏁板涓婃湁浜夎锛屼絾閫氬父瀹氫箟涓?
+        expect(
+          ScientificCalculator.calculate('0^0'),
+          '1',
+        ); // 鏁板涓婃湁浜夎锛屼絾閫氬父瀹氫箟涓?
         expect(ScientificCalculator.calculate('0^1'), '0');
         expect(ScientificCalculator.calculate('0^2'), '0');
       });
 
       test('e power', () {
         expect(ScientificCalculator.calculate('e^0'), '1');
-        
+
         final eToOne = double.parse(ScientificCalculator.calculate('e^1'));
         expect(eToOne, closeTo(math.e, 0.0001));
-        
+
         final eToTwo = double.parse(ScientificCalculator.calculate('e^2'));
         expect(eToTwo, closeTo(math.e * math.e, 0.0001));
       });
@@ -189,7 +192,7 @@ void main() {
       test('non-perfect squares', () {
         final sqrt2 = double.parse(ScientificCalculator.calculate('sqrt2'));
         expect(sqrt2, closeTo(1.414213, 0.0001));
-        
+
         final sqrt3 = double.parse(ScientificCalculator.calculate('sqrt3'));
         expect(sqrt3, closeTo(1.732050, 0.0001));
       });
@@ -205,7 +208,7 @@ void main() {
       test('pi constant', () {
         final pi = double.parse(ScientificCalculator.calculate('蟺'));
         expect(pi, closeTo(math.pi, 0.0001));
-        
+
         final piTimes2 = double.parse(ScientificCalculator.calculate('蟺脳2'));
         expect(piTimes2, closeTo(math.pi * 2, 0.0001));
       });
@@ -213,7 +216,7 @@ void main() {
       test('e constant', () {
         final e = double.parse(ScientificCalculator.calculate('e'));
         expect(e, closeTo(math.e, 0.0001));
-        
+
         final eTimes2 = double.parse(ScientificCalculator.calculate('e脳2'));
         expect(eTimes2, closeTo(math.e * 2, 0.0001));
       });
@@ -241,25 +244,21 @@ void main() {
       test('mixed functions and operations', () {
         // sin(0) + cos(0) = 0 + 1 = 1
         final result1 = double.parse(
-          ScientificCalculator.calculate('sin0+cos0')
+          ScientificCalculator.calculate('sin0+cos0'),
         );
         expect(result1, closeTo(1, 0.0001));
-        
+
         // log(10) 脳 2 = 1 脳 2 = 2
         expect(ScientificCalculator.calculate('log10脳2'), '2');
       });
 
       test('functions with constants', () {
         // sin(蟺) 鈮?0
-        final sinPi = double.parse(
-          ScientificCalculator.calculate('sin蟺')
-        );
+        final sinPi = double.parse(ScientificCalculator.calculate('sin蟺'));
         expect(sinPi, closeTo(0, 0.0001));
-        
+
         // ln(e) = 1
-        final lnE = double.parse(
-          ScientificCalculator.calculate('lne')
-        );
+        final lnE = double.parse(ScientificCalculator.calculate('lne'));
         expect(lnE, closeTo(1, 0.0001));
       });
     });

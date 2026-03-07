@@ -35,7 +35,8 @@ void main() {
       });
 
       test('negative multiplication', () {
-        expect(BasicCalculator.calculate('-5脳2'), 'Error'); // 褰撳墠瀹炵幇涓嶆敮鎸佽礋鏁板紑澶?      });
+        expect(BasicCalculator.calculate('-5脳2'), 'Error'); // 当前实现不支持负数开头
+      });
     });
 
     group('Large Numbers', () {

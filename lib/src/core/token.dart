@@ -3,7 +3,7 @@ enum TokenType {
   // Values
   number,
   variable,
-  
+
   // Operators
   plus,
   minus,
@@ -12,7 +12,7 @@ enum TokenType {
   modulo,
   power,
   unaryMinus,
-  
+
   // Functions
   sin,
   cos,
@@ -27,7 +27,7 @@ enum TokenType {
   ceil,
   floor,
   exp,
-  
+
   // Delimiters
   leftParen,
   rightParen,
@@ -51,7 +51,7 @@ extension TokenTypeProperties on TokenType {
         return false;
     }
   }
-  
+
   /// Whether this token is a function
   bool get isFunction {
     switch (this) {
@@ -73,7 +73,7 @@ extension TokenTypeProperties on TokenType {
         return false;
     }
   }
-  
+
   /// Operator precedence (higher = evaluated first)
   int get precedence {
     switch (this) {
@@ -92,7 +92,7 @@ extension TokenTypeProperties on TokenType {
         return 0;
     }
   }
-  
+
   /// Whether operator is left-associative
   bool get isLeftAssociative {
     switch (this) {
@@ -109,16 +109,16 @@ extension TokenTypeProperties on TokenType {
 class Token {
   final TokenType type;
   final String text;
-  
+
   const Token(this.type, this.text);
-  
+
   @override
   String toString() => '($type: $text)';
-  
+
   @override
   bool operator ==(Object other) =>
       other is Token && other.type == type && other.text == text;
-  
+
   @override
   int get hashCode => Object.hash(type, text);
 }

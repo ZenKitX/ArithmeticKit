@@ -37,7 +37,9 @@ void main() {
       });
 
       test('ln', () {
-        final result = double.parse(ScientificCalculator.calculate('ln${math.e}'));
+        final result = double.parse(
+          ScientificCalculator.calculate('ln${math.e}'),
+        );
         expect(result, closeTo(1, 0.0001));
       });
     });

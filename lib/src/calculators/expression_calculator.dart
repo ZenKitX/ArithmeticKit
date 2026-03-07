@@ -2,7 +2,7 @@ import '../core/expression.dart';
 import '../core/parser.dart';
 
 /// Advanced calculator using expression tree evaluation
-/// 
+///
 /// Supports:
 /// - Basic operations: +, -, *, /, %, ^
 /// - Functions: sin, cos, tan, asin, acos, atan, ln, log, sqrt, abs, ceil, floor, exp
@@ -11,9 +11,9 @@ import '../core/parser.dart';
 /// - Parentheses for grouping
 class ExpressionCalculator {
   final ExpressionParser _parser = ExpressionParser();
-  
+
   /// Parse a string expression into an Expression tree
-  /// 
+  ///
   /// Example:
   /// ```dart
   /// final calc = ExpressionCalculator();
@@ -22,9 +22,9 @@ class ExpressionCalculator {
   Expression parse(String input) {
     return _parser.parse(input);
   }
-  
+
   /// Evaluate an expression string with optional variables
-  /// 
+  ///
   /// Example:
   /// ```dart
   /// final calc = ExpressionCalculator();
@@ -35,9 +35,9 @@ class ExpressionCalculator {
     final expr = parse(input);
     return expr.evaluate(variables);
   }
-  
+
   /// Parse and simplify an expression
-  /// 
+  ///
   /// Example:
   /// ```dart
   /// final calc = ExpressionCalculator();
@@ -48,9 +48,9 @@ class ExpressionCalculator {
     final expr = parse(input);
     return expr.simplify();
   }
-  
+
   /// Evaluate and format result as string
-  /// 
+  ///
   /// Example:
   /// ```dart
   /// final calc = ExpressionCalculator();
@@ -65,25 +65,25 @@ class ExpressionCalculator {
       return 'Error';
     }
   }
-  
+
   /// Format result for display
   String _formatResult(double result) {
     // Handle special cases
     if (result.isNaN) return 'Error';
     if (result.isInfinite) return result.isNegative ? '-∞' : '∞';
-    
+
     // If integer, don't show decimal point
     if (result == result.toInt()) {
       return result.toInt().toString();
     }
-    
+
     // Keep at most 10 decimal places
     String resultStr = result.toStringAsFixed(10);
-    
+
     // Remove trailing zeros
     resultStr = resultStr.replaceAll(RegExp(r'0+$'), '');
     resultStr = resultStr.replaceAll(RegExp(r'\.$'), '');
-    
+
     return resultStr;
   }
 }

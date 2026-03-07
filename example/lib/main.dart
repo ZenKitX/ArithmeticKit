@@ -97,10 +97,7 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.all(16),
               ),
-              child: const Text(
-                'Calculate',
-                style: TextStyle(fontSize: 18),
-              ),
+              child: const Text('Calculate', style: TextStyle(fontSize: 18)),
             ),
             const SizedBox(height: 10),
 
@@ -110,10 +107,7 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
               style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.all(16),
               ),
-              child: const Text(
-                'Clear',
-                style: TextStyle(fontSize: 18),
-              ),
+              child: const Text('Clear', style: TextStyle(fontSize: 18)),
             ),
             const SizedBox(height: 30),
 
@@ -129,10 +123,7 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
                 children: [
                   const Text(
                     'Result:',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
                   Text(
@@ -175,11 +166,7 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
                         '10-6÷2',
                         '(2+3)×4',
                       ]),
-                      _buildExample('Decimals', [
-                        '0.5+0.5',
-                        '1.5×2',
-                        '1÷3',
-                      ]),
+                      _buildExample('Decimals', ['0.5+0.5', '1.5×2', '1÷3']),
                     ] else ...[
                       _buildExample('Trigonometric', [
                         'sin0',
@@ -198,11 +185,7 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
                         'e^2',
                         '10^3',
                       ]),
-                      _buildExample('Constants', [
-                        'π',
-                        'e',
-                        'π×2',
-                      ]),
+                      _buildExample('Constants', ['π', 'e', 'π×2']),
                     ],
                   ],
                 ),
@@ -222,10 +205,7 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
         children: [
           Text(
             title,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            ),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 8),
           Wrap(
